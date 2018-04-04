@@ -207,6 +207,7 @@
       <LastGenOutput>EduPointData.Context.cs</LastGenOutput>
       <DependentUpon>EduPointData.edmx</DependentUpon>
     </Content>
+    <Content Include="Models\EduPointData.edmx.sql" />
     <Content Include="Models\EduPointData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>EduPointData.edmx</DependentUpon>
