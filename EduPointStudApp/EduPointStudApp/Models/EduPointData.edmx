@@ -1,0 +1,343 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="OpiskelijarekisteriModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Kurssi">
+          <Key>
+            <PropertyRef Name="KurssiID" />
+          </Key>
+          <Property Name="Kurssinimi" Type="varchar" MaxLength="50" />
+          <Property Name="Kurssikoodi" Type="nvarchar" MaxLength="100" />
+          <Property Name="KurssiID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Lasnaolotiedot">
+          <Key>
+            <PropertyRef Name="RekisteriID" />
+          </Key>
+          <Property Name="KirjattuSisaan" Type="datetime" />
+          <Property Name="KirjattuUlos" Type="datetime" />
+          <Property Name="Luokkakoodi" Type="nvarchar" MaxLength="50" />
+          <Property Name="OpettajaID" Type="int" />
+          <Property Name="RekisteriID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OpiskelijaID" Type="int" />
+          <Property Name="KurssiID" Type="int" />
+          <Property Name="LuokkaID" Type="int" />
+          <Property Name="KirjattuID" Type="int" />
+        </EntityType>
+        <EntityType Name="Luokkahuone">
+          <Key>
+            <PropertyRef Name="LuokkaID" />
+          </Key>
+          <Property Name="LuokkaID" Type="int" Nullable="false" />
+          <Property Name="LuokanNimi" Type="nvarchar" MaxLength="100" />
+          <Property Name="LuokanKoodi" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Opettaja">
+          <Key>
+            <PropertyRef Name="OpettajaID" />
+          </Key>
+          <Property Name="OpettajaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Etunimi" Type="varchar" MaxLength="50" />
+          <Property Name="Sukunimi" Type="varchar" MaxLength="50" />
+          <Property Name="Opettajanro" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Opiskelija">
+          <Key>
+            <PropertyRef Name="OpiskelijaID" />
+          </Key>
+          <Property Name="Etunimi" Type="varchar" MaxLength="50" />
+          <Property Name="Sukunimi" Type="varchar" MaxLength="50" />
+          <Property Name="Opiskelijanro" Type="nvarchar" MaxLength="50" />
+          <Property Name="OpiskelijaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Tutkinto" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK__Lasnaolot__Opett__5441852A">
+          <End Role="Opettaja" Type="Self.Opettaja" Multiplicity="0..1" />
+          <End Role="Lasnaolotiedot" Type="Self.Lasnaolotiedot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Opettaja">
+              <PropertyRef Name="OpettajaID" />
+            </Principal>
+            <Dependent Role="Lasnaolotiedot">
+              <PropertyRef Name="OpettajaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lasnaolotiedot_Kurssi">
+          <End Role="Kurssi" Type="Self.Kurssi" Multiplicity="0..1" />
+          <End Role="Lasnaolotiedot" Type="Self.Lasnaolotiedot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kurssi">
+              <PropertyRef Name="KurssiID" />
+            </Principal>
+            <Dependent Role="Lasnaolotiedot">
+              <PropertyRef Name="KurssiID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lasnaolotiedot_Opiskelija">
+          <End Role="Opiskelija" Type="Self.Opiskelija" Multiplicity="0..1" />
+          <End Role="Lasnaolotiedot" Type="Self.Lasnaolotiedot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Opiskelija">
+              <PropertyRef Name="OpiskelijaID" />
+            </Principal>
+            <Dependent Role="Lasnaolotiedot">
+              <PropertyRef Name="OpiskelijaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Luokkahuone">
+          <End Role="Luokkahuone" Type="Self.Luokkahuone" Multiplicity="0..1" />
+          <End Role="Lasnaolotiedot" Type="Self.Lasnaolotiedot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Luokkahuone">
+              <PropertyRef Name="LuokkaID" />
+            </Principal>
+            <Dependent Role="Lasnaolotiedot">
+              <PropertyRef Name="LuokkaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="OpiskelijarekisteriModelStoreContainer">
+          <EntitySet Name="Kurssi" EntityType="Self.Kurssi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Lasnaolotiedot" EntityType="Self.Lasnaolotiedot" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Luokkahuone" EntityType="Self.Luokkahuone" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Opettaja" EntityType="Self.Opettaja" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Opiskelija" EntityType="Self.Opiskelija" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Lasnaolot__Opett__5441852A" Association="Self.FK__Lasnaolot__Opett__5441852A">
+            <End Role="Opettaja" EntitySet="Opettaja" />
+            <End Role="Lasnaolotiedot" EntitySet="Lasnaolotiedot" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lasnaolotiedot_Kurssi" Association="Self.FK_Lasnaolotiedot_Kurssi">
+            <End Role="Kurssi" EntitySet="Kurssi" />
+            <End Role="Lasnaolotiedot" EntitySet="Lasnaolotiedot" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lasnaolotiedot_Opiskelija" Association="Self.FK_Lasnaolotiedot_Opiskelija">
+            <End Role="Opiskelija" EntitySet="Opiskelija" />
+            <End Role="Lasnaolotiedot" EntitySet="Lasnaolotiedot" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Luokkahuone" Association="Self.FK_Luokkahuone">
+            <End Role="Luokkahuone" EntitySet="Luokkahuone" />
+            <End Role="Lasnaolotiedot" EntitySet="Lasnaolotiedot" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="OpiskelijarekisteriModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="OpiskelijarekisteriEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Kurssi" EntityType="OpiskelijarekisteriModel.Kurssi" />
+          <EntitySet Name="Lasnaolotiedot" EntityType="OpiskelijarekisteriModel.Lasnaolotiedot" />
+          <EntitySet Name="Luokkahuone" EntityType="OpiskelijarekisteriModel.Luokkahuone" />
+          <EntitySet Name="Opettaja" EntityType="OpiskelijarekisteriModel.Opettaja" />
+          <EntitySet Name="Opiskelija" EntityType="OpiskelijarekisteriModel.Opiskelija" />
+          <AssociationSet Name="FK_Lasnaolotiedot_Kurssi" Association="OpiskelijarekisteriModel.FK_Lasnaolotiedot_Kurssi">
+            <End Role="Kurssi" EntitySet="Kurssi" />
+            <End Role="Lasnaolotiedot" EntitySet="Lasnaolotiedot" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Lasnaolot__Opett__5441852A" Association="OpiskelijarekisteriModel.FK__Lasnaolot__Opett__5441852A">
+            <End Role="Opettaja" EntitySet="Opettaja" />
+            <End Role="Lasnaolotiedot" EntitySet="Lasnaolotiedot" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lasnaolotiedot_Opiskelija" Association="OpiskelijarekisteriModel.FK_Lasnaolotiedot_Opiskelija">
+            <End Role="Opiskelija" EntitySet="Opiskelija" />
+            <End Role="Lasnaolotiedot" EntitySet="Lasnaolotiedot" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Luokkahuone" Association="OpiskelijarekisteriModel.FK_Luokkahuone">
+            <End Role="Luokkahuone" EntitySet="Luokkahuone" />
+            <End Role="Lasnaolotiedot" EntitySet="Lasnaolotiedot" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Kurssi">
+          <Key>
+            <PropertyRef Name="KurssiID" />
+          </Key>
+          <Property Name="Kurssinimi" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Kurssikoodi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="KurssiID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Lasnaolotiedot" Relationship="OpiskelijarekisteriModel.FK_Lasnaolotiedot_Kurssi" FromRole="Kurssi" ToRole="Lasnaolotiedot" />
+        </EntityType>
+        <EntityType Name="Lasnaolotiedot">
+          <Key>
+            <PropertyRef Name="RekisteriID" />
+          </Key>
+          <Property Name="KirjattuSisaan" Type="DateTime" Precision="3" />
+          <Property Name="KirjattuUlos" Type="DateTime" Precision="3" />
+          <Property Name="Luokkakoodi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OpettajaID" Type="Int32" />
+          <Property Name="RekisteriID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OpiskelijaID" Type="Int32" />
+          <Property Name="KurssiID" Type="Int32" />
+          <Property Name="LuokkaID" Type="Int32" />
+          <Property Name="KirjattuID" Type="Int32" />
+          <NavigationProperty Name="Kurssi" Relationship="OpiskelijarekisteriModel.FK_Lasnaolotiedot_Kurssi" FromRole="Lasnaolotiedot" ToRole="Kurssi" />
+          <NavigationProperty Name="Opettaja" Relationship="OpiskelijarekisteriModel.FK__Lasnaolot__Opett__5441852A" FromRole="Lasnaolotiedot" ToRole="Opettaja" />
+          <NavigationProperty Name="Opiskelija" Relationship="OpiskelijarekisteriModel.FK_Lasnaolotiedot_Opiskelija" FromRole="Lasnaolotiedot" ToRole="Opiskelija" />
+          <NavigationProperty Name="Luokkahuone" Relationship="OpiskelijarekisteriModel.FK_Luokkahuone" FromRole="Lasnaolotiedot" ToRole="Luokkahuone" />
+        </EntityType>
+        <EntityType Name="Luokkahuone">
+          <Key>
+            <PropertyRef Name="LuokkaID" />
+          </Key>
+          <Property Name="LuokkaID" Type="Int32" Nullable="false" />
+          <Property Name="LuokanNimi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LuokanKoodi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Lasnaolotiedot" Relationship="OpiskelijarekisteriModel.FK_Luokkahuone" FromRole="Luokkahuone" ToRole="Lasnaolotiedot" />
+        </EntityType>
+        <EntityType Name="Opettaja">
+          <Key>
+            <PropertyRef Name="OpettajaID" />
+          </Key>
+          <Property Name="OpettajaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Etunimi" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Sukunimi" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Opettajanro" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Lasnaolotiedot" Relationship="OpiskelijarekisteriModel.FK__Lasnaolot__Opett__5441852A" FromRole="Opettaja" ToRole="Lasnaolotiedot" />
+        </EntityType>
+        <EntityType Name="Opiskelija">
+          <Key>
+            <PropertyRef Name="OpiskelijaID" />
+          </Key>
+          <Property Name="Etunimi" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Sukunimi" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Opiskelijanro" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OpiskelijaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Tutkinto" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Lasnaolotiedot" Relationship="OpiskelijarekisteriModel.FK_Lasnaolotiedot_Opiskelija" FromRole="Opiskelija" ToRole="Lasnaolotiedot" />
+        </EntityType>
+        <Association Name="FK_Lasnaolotiedot_Kurssi">
+          <End Type="OpiskelijarekisteriModel.Kurssi" Role="Kurssi" Multiplicity="0..1" />
+          <End Type="OpiskelijarekisteriModel.Lasnaolotiedot" Role="Lasnaolotiedot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kurssi">
+              <PropertyRef Name="KurssiID" />
+            </Principal>
+            <Dependent Role="Lasnaolotiedot">
+              <PropertyRef Name="KurssiID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Lasnaolot__Opett__5441852A">
+          <End Type="OpiskelijarekisteriModel.Opettaja" Role="Opettaja" Multiplicity="0..1" />
+          <End Type="OpiskelijarekisteriModel.Lasnaolotiedot" Role="Lasnaolotiedot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Opettaja">
+              <PropertyRef Name="OpettajaID" />
+            </Principal>
+            <Dependent Role="Lasnaolotiedot">
+              <PropertyRef Name="OpettajaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lasnaolotiedot_Opiskelija">
+          <End Type="OpiskelijarekisteriModel.Opiskelija" Role="Opiskelija" Multiplicity="0..1" />
+          <End Type="OpiskelijarekisteriModel.Lasnaolotiedot" Role="Lasnaolotiedot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Opiskelija">
+              <PropertyRef Name="OpiskelijaID" />
+            </Principal>
+            <Dependent Role="Lasnaolotiedot">
+              <PropertyRef Name="OpiskelijaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Luokkahuone">
+          <End Type="OpiskelijarekisteriModel.Luokkahuone" Role="Luokkahuone" Multiplicity="0..1" />
+          <End Type="OpiskelijarekisteriModel.Lasnaolotiedot" Role="Lasnaolotiedot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Luokkahuone">
+              <PropertyRef Name="LuokkaID" />
+            </Principal>
+            <Dependent Role="Lasnaolotiedot">
+              <PropertyRef Name="LuokkaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="OpiskelijarekisteriModelStoreContainer" CdmEntityContainer="OpiskelijarekisteriEntities">
+          <EntitySetMapping Name="Kurssi">
+            <EntityTypeMapping TypeName="OpiskelijarekisteriModel.Kurssi">
+              <MappingFragment StoreEntitySet="Kurssi">
+                <ScalarProperty Name="KurssiID" ColumnName="KurssiID" />
+                <ScalarProperty Name="Kurssikoodi" ColumnName="Kurssikoodi" />
+                <ScalarProperty Name="Kurssinimi" ColumnName="Kurssinimi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Lasnaolotiedot">
+            <EntityTypeMapping TypeName="OpiskelijarekisteriModel.Lasnaolotiedot">
+              <MappingFragment StoreEntitySet="Lasnaolotiedot">
+                <ScalarProperty Name="KirjattuID" ColumnName="KirjattuID" />
+                <ScalarProperty Name="LuokkaID" ColumnName="LuokkaID" />
+                <ScalarProperty Name="KurssiID" ColumnName="KurssiID" />
+                <ScalarProperty Name="OpiskelijaID" ColumnName="OpiskelijaID" />
+                <ScalarProperty Name="RekisteriID" ColumnName="RekisteriID" />
+                <ScalarProperty Name="OpettajaID" ColumnName="OpettajaID" />
+                <ScalarProperty Name="Luokkakoodi" ColumnName="Luokkakoodi" />
+                <ScalarProperty Name="KirjattuUlos" ColumnName="KirjattuUlos" />
+                <ScalarProperty Name="KirjattuSisaan" ColumnName="KirjattuSisaan" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Luokkahuone">
+            <EntityTypeMapping TypeName="OpiskelijarekisteriModel.Luokkahuone">
+              <MappingFragment StoreEntitySet="Luokkahuone">
+                <ScalarProperty Name="LuokanKoodi" ColumnName="LuokanKoodi" />
+                <ScalarProperty Name="LuokanNimi" ColumnName="LuokanNimi" />
+                <ScalarProperty Name="LuokkaID" ColumnName="LuokkaID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Opettaja">
+            <EntityTypeMapping TypeName="OpiskelijarekisteriModel.Opettaja">
+              <MappingFragment StoreEntitySet="Opettaja">
+                <ScalarProperty Name="Opettajanro" ColumnName="Opettajanro" />
+                <ScalarProperty Name="Sukunimi" ColumnName="Sukunimi" />
+                <ScalarProperty Name="Etunimi" ColumnName="Etunimi" />
+                <ScalarProperty Name="OpettajaID" ColumnName="OpettajaID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Opiskelija">
+            <EntityTypeMapping TypeName="OpiskelijarekisteriModel.Opiskelija">
+              <MappingFragment StoreEntitySet="Opiskelija">
+                <ScalarProperty Name="Tutkinto" ColumnName="Tutkinto" />
+                <ScalarProperty Name="OpiskelijaID" ColumnName="OpiskelijaID" />
+                <ScalarProperty Name="Opiskelijanro" ColumnName="Opiskelijanro" />
+                <ScalarProperty Name="Sukunimi" ColumnName="Sukunimi" />
+                <ScalarProperty Name="Etunimi" ColumnName="Etunimi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

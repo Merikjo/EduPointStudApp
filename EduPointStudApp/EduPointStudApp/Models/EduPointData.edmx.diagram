@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0f3cbe2762a24a969653c59c0a910c77" Name="Diagram1">
+        <EntityTypeShape EntityType="OpiskelijarekisteriModel.Kurssi" Width="1.5" PointX="5.75" PointY="4.5" />
+        <EntityTypeShape EntityType="OpiskelijarekisteriModel.Lasnaolotiedot" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="OpiskelijarekisteriModel.Luokkahuone" Width="1.5" PointX="5.625" PointY="1.25" />
+        <EntityTypeShape EntityType="OpiskelijarekisteriModel.Opettaja" Width="1.5" PointX="0.75" PointY="1.75" />
+        <EntityTypeShape EntityType="OpiskelijarekisteriModel.Opiskelija" Width="1.5" PointX="0.75" PointY="4.5" />
+        <AssociationConnector Association="OpiskelijarekisteriModel.FK_Lasnaolotiedot_Kurssi" />
+        <AssociationConnector Association="OpiskelijarekisteriModel.FK__Lasnaolot__Opett__5441852A" />
+        <AssociationConnector Association="OpiskelijarekisteriModel.FK_Lasnaolotiedot_Opiskelija" />
+        <AssociationConnector Association="OpiskelijarekisteriModel.FK_Luokkahuone" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
